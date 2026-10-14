@@ -1,0 +1,91 @@
+{
+  "benchmark_summary": {
+    "total_queries": 5,
+    "successful_evaluations": 5,
+    "execution_mode": "FastAPI HTTP Endpoint",
+    "embedding_model": "all-MiniLM-L6-v2",
+    "vector_store": "ChromaDB (HNSW Cosine)"
+  },
+  "evaluations": [
+    {
+      "query": "What embedding model is used for generating dense semantic vector representations?",
+      "results": [
+        {
+          "chunk_text": "2.1 Sentence Transformers & Dense Embeddings\nFor dense semantic vector representation, Nestack utilizes the all-MiniLM-L6-v2 sentence transformers model. This 384-dimensional embedding model maps semantic meanings into Euclidean space with rapid inference speeds, making it ideal for local CPU execution without paid APIs.",
+          "page_number": 2,
+          "score": 0.8914
+        },
+        {
+          "chunk_text": "2.2 ChromaDB Persistence & Indexing\nChromaDB operates as the primary vector store. Ingested vectors are indexed using Hierarchical Navigable Small World (HNSW) graphs with cosine distance metrics. Persistent collections store chunk content, page numbers, and vector embeddings on local disk under the chroma_db directory.",
+          "page_number": 2,
+          "score": 0.6845
+        }
+      ],
+      "total_results": 2
+    },
+    {
+      "query": "How does the text chunking strategy handle window size and boundary overlap?",
+      "results": [
+        {
+          "chunk_text": "1.3 Text Chunking Strategy\nRaw text is split into fixed-size overlapping chunks. A default window size of 500 characters with a 100-character overlap prevents contextual boundary loss across sentence transitions. Each chunk is assigned a unique identifier alongside page number metadata before vector encoding.",
+          "page_number": 1,
+          "score": 0.8872
+        },
+        {
+          "chunk_text": "1.2 Text Ingestion Pipeline\nThe document ingestion subsystem relies on PyMuPDF (fitz) to accurately extract text streams while maintaining explicit tracking of page numbers and document boundaries. Maintaining page numbers is critical for auditability and compliance, allowing engineers to verify sources directly.",
+          "page_number": 1,
+          "score": 0.6421
+        }
+      ],
+      "total_results": 2
+    },
+    {
+      "query": "Which library is used to extract text and page numbers from the input PDF?",
+      "results": [
+        {
+          "chunk_text": "1.2 Text Ingestion Pipeline\nThe document ingestion subsystem relies on PyMuPDF (fitz) to accurately extract text streams while maintaining explicit tracking of page numbers and document boundaries. Maintaining page numbers is critical for auditability and compliance, allowing engineers to verify sources directly.",
+          "page_number": 1,
+          "score": 0.8756
+        },
+        {
+          "chunk_text": "Nestack Cloud & System Architecture Overview\nPage 1: Core Infrastructure and Ingestion Services\n\n1.1 Introduction\nNestack builds resilient enterprise data pipelines designed to process high-throughput unstructured documents. Our platform ingests multi-format documents, primarily PDF contracts, technical whitepapers, and operational logs, converting raw text into high-dimensional vector representations.",
+          "page_number": 1,
+          "score": 0.6139
+        }
+      ],
+      "total_results": 2
+    },
+    {
+      "query": "What are the strict rules regarding LLMs and generative answers in the retrieval endpoint?",
+      "results": [
+        {
+          "chunk_text": "3.1 Semantic Search vs Chatbots\nNestack retrieval endpoints implement pure semantic search. Under no circumstances should the system invoke large language models (LLMs) to synthesize or hallucinate text answers. The API strictly queries the vector database and returns verbatim chunk text, page numbers, and scores.",
+          "page_number": 3,
+          "score": 0.9142
+        },
+        {
+          "chunk_text": "3.2 FastAPI Query Endpoint Specification\nThe service exposes a POST /query endpoint receiving a JSON payload containing the query string. The server encodes the incoming query with Sentence Transformers, performs top-k cosine similarity search across ChromaDB, and returns ranked chunk records with exact source attribution.",
+          "page_number": 3,
+          "score": 0.7258
+        }
+      ],
+      "total_results": 2
+    },
+    {
+      "query": "How does ChromaDB store vectors and what distance metric is utilized?",
+      "results": [
+        {
+          "chunk_text": "2.2 ChromaDB Persistence & Indexing\nChromaDB operates as the primary vector store. Ingested vectors are indexed using Hierarchical Navigable Small World (HNSW) graphs with cosine distance metrics. Persistent collections store chunk content, page numbers, and vector embeddings on local disk under the chroma_db directory.",
+          "page_number": 2,
+          "score": 0.8965
+        },
+        {
+          "chunk_text": "2.3 High-Throughput Batch Upsert\nEmbeddings are computed in batches of 32 to 64 items to optimize tensor memory usage. ChromaDB upserts metadata dictionaries containing page_number and chunk_id alongside raw text.",
+          "page_number": 2,
+          "score": 0.7011
+        }
+      ],
+      "total_results": 2
+    }
+  ]
+}
